@@ -3,6 +3,9 @@ import MainPage from './MainPage';
 import Nav from './Nav';
 import ShoeList from './ShoeList';
 import ShoeForm from './ShoeForm';
+import HatForm from './HatForm';
+import HatList from './HatList';
+
 
 
 function App() {
@@ -15,6 +18,10 @@ function App() {
           <Route path="shoes">
             <Route index element={<ShoeList />} />
             <Route path="new" element={<ShoeForm />} />
+          </Route>
+          <Route path="hats">
+            <Route index element={<HatList />} />
+            <Route path="new" element={<HatForm />} />
           </Route>
         </Routes>
       </div>
