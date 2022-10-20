@@ -110,7 +110,7 @@ def api_show_hat(request, pk):
         content = json.loads(request.body)
         try:
             if "location" in content:
-                location = LocationVO.objects.get(id=content["location"])
+                location = LocationVO.objects.get(import_href=content["location"])
                 content["location"] = location
         except LocationVO.DoesNotExist:
             return JsonResponse(

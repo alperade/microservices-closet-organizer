@@ -15,15 +15,8 @@ class ShoeColumn extends React.Component {
                 'Content-Type': 'application/json'
             }
         }
-        //window.location.reload(false);
+        window.location.reload(false);
 
-        //for (let i = 0; i < this.props.list.length; i++) {
-
-            //if (this.props.list[i].href === shoe) {
-                //delete this.props.list[i]
-           // }
-       // }
-        this.setState(this.state)
 
 
 
