@@ -1,7 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ShoeColumn from './ShoeColumn';
 
+
+function ShoeColumn(props) {
+      return (
+      <div className="col">
+          {props.list.map(data => {
+          const shoe = data;
+          return (
+              <div key={shoe.href} className="card mb-3 shadow">
+              <img src={shoe.picture_url} className="card-img-top" />
+              <div className="card-body">
+                  <h5 className="card-title">{shoe.manufacturer}</h5>
+                  <h6 className="card-subtitle mb-2 text-muted">
+                  {shoe.model_name}
+                  </h6>
+                  <p className="card-text"> Color: {shoe.color}</p>
+                  <p className="card-text"> Href: {shoe.href}</p>
+              </div>
+              <div className="card-footer">
+                  <p>Closet: {shoe.bin.closet_name}</p>
+                  <p>Bin: {shoe.bin.bin_number}</p>
+                  <button className="btn btn-primary" onClick={async () => await props.deleteEntry(shoe)}>Delete</button>
+              </div>
+              </div>
+          );
+          })}
+      </div>
+      );
+  }
 
 
 class ShoeList extends React.Component {
@@ -10,6 +37,8 @@ class ShoeList extends React.Component {
     this.state = {
       shoeColumns: [[], [], []],
     };
+    //this.deleteEntry = this.deleteEntry.bind(this);
+
   }
 
 
@@ -51,6 +80,26 @@ class ShoeList extends React.Component {
     }
   }
 
+  deleteEntry= async (shoeDel) => {
+    const deleteUrl = 'http://localhost:8080' + shoeDel.href;
+    const fetchConfig = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    //window.location.reload(false);
+    const response = await fetch(deleteUrl, fetchConfig);
+    if (response.ok) {
+      let filteredShoes = [
+        ...[this.state.shoeColumns[0].filter(shoe => shoe.href !== shoeDel.href)],
+        ...[this.state.shoeColumns[1].filter(shoe => shoe.href !== shoeDel.href)],
+        ...[this.state.shoeColumns[2].filter(shoe => shoe.href !== shoeDel.href)]]
+      console.log(filteredShoes)
+        this.setState({shoeColumns: filteredShoes})
+    }
+  }
+
   render() {
     return (
       <>
@@ -64,7 +113,7 @@ class ShoeList extends React.Component {
           <div className="row">
             {this.state.shoeColumns.map((shoeList, index) => {
               return (
-                <ShoeColumn key={index} list={shoeList} />
+                <ShoeColumn deleteEntry={this.deleteEntry} key={index} list={shoeList} />
               );
             })}
           </div>

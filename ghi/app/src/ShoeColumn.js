@@ -18,9 +18,6 @@ class ShoeColumn extends React.Component {
         window.location.reload(false);
 
 
-
-
-
     await fetch(url, fetchConfig)
     }
 
